@@ -1,0 +1,16 @@
+# Dependencies and generated build
+node_modules/
+dist/
+
+# Local verification artifacts
+output/
+.playwright-cli/
+
+# Logs and local environment settings
+*.log
+.env
+.env.*
+!.env.example
+
+# macOS metadata
+.DS_Store

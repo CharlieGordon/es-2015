@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES 2015</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="icon" href="data:,">
+</head>
+
+<body style="background-color: #fdf6e3;">
+    <div class="reveal" style="">
+        <div class="slides">
+            <section>
+                <h1>ES 2015</h1>
+            </section>
+
+            <!-- История -->
+            <section>
+                <h2>История EcmaScript</h2>
+
+                <img src="img/504a78cba9324062bb3d66d6af2e0588.png" alt="">
+            </section>
+
+            <!-- TC39 -->
+            <section>
+                <section>
+                    <h3>Процесс внесения новых возможностей языка в спецификацию ECMAScript</h3>
+
+                    <p><a href="https://github.com/tc39">TC39</a> — это комитет, который занимается развитием JavaScript. Его членами являются компании (помимо прочих, все основные производители браузеров). TC39 регулярно собирается, на встречах присутствуют участники, представляющие интересы компаний, и приглашенные эксперты. Протоколы встреч доступны онлайн и дают представление о том, как работает TC39.</p>
+                </section>
+
+                <section>
+                    <h3>Этапы</h3>
+
+                    <p>Каждое предложение по добавлению новой возможности в ECMAScript в процессе созревания проходит
+                        <a href="https://tc39.github.io/process-document/">описанные ниже этапы</a>, начиная с нулевого. Переход от одного этапа к другому должен быть утвержден TC39.</p>
+                </section>
+
+                <section>
+                    <p>Stage 0. Strawman</p>
+                    <p>Stage 1. Proposal</p>
+                    <p>Stage 2. Draft</p>
+                    <p>Stage 3. Candidate</p>
+                    <p>Stage 4. Finished</p>
+                </section>
+
+                <section>
+                    <a href="https://github.com/tc39/proposals">https://github.com/tc39/proposals</a>
+                </section>
+            </section>
+
+            <section>
+                <h2>Новые возможности</h2>
+            </section>
+
+            <!-- let и const -->
+            <section>
+                <section>
+                    <h2>Переменные let и const</h2>
+
+                    <p>В ES-2015 предусмотрены новые способы объявления переменных: через let и const</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let x;
+
+    const y = 10;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>let</h3>
+
+                    <ul>
+                        <li>Блочная область видимости вместо лексической у var</li>
+                        <li>Нельзя повторно объявлять в этом же блоке</li>
+                        <li>Отсутствует hoisting (let и const не существуют до своего объявления)</li>
+                        <li>При использовании в цикле, для каждой итерации создаётся своя переменная</li>
+                    </ul>
+
+                     <pre><code class="javascript" contenteditable="true">
+    let x = 5;
+
+    {
+        let x = 10;
+        console.log(x); // => 10
+    }
+
+    console.log(x); // => 5
+                     </code></pre>
+                </section>
+
+                <section>
+                    <h3>const</h3>
+
+                    <ul>
+                        <li>Также имеет блочную область видимости</li>
+                        <li>В const одновременно с объявлением переменной должно быть присвоено значение</li>
+                        <li>Рекомендуется использовать UPPER_CASE</li>
+                        <li>Разрешается переопределять свойства объекта</li>
+                    </ul>
+
+                    <pre><code class="javascript" contenteditable="true">
+    const obj = {x: 5, y: 10};
+
+    obj.x = 8;
+
+    obj = []; // Uncaught TypeError: Assignment to constant variable.
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше про let и const можно
+                        <a href="http://learn.javascript.ru/let-const">тут</a></p>
+                </section>
+            </section>
+
+            <!-- Template Strings -->
+            <section>
+                <section>
+                    <h2>Template Strings</h2>
+
+                    <ul>
+                        <li>Используются обратные кавычки ` (backtick)</li>
+                        <li>${ ... } используется для вычисляемого значения / переменной / выражения</li>
+                        <li>Могут быть многострочными</li>
+                    </ul>
+
+                    <pre><code class="javascript" contenteditable="true">
+    // было
+    $('[data-param="' + x + '-' + y + '"]').on
+
+    // стало
+    $(`[data-param="${x}-${y}"]`).on
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Многострочность</h3>
+
+                    <pre><code class="javascript html" contenteditable="true">
+    let title = `Hello, world!`;
+    let body = `Lorem ipsum dolor sit amet, consectetur adipisicing elit.`;
+
+    let article = `&lt;article class="article"&gt;
+            &lt;div class="article__title"&gt;${title.toUpperCase()}&lt;/div&gt;
+            &lt;div class="article__body"&gt;${body}&lt;/div&gt;
+        &lt;/article&gt;`;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Функции шаблонизации</h3>
+
+                    <p>Можно использовать свою функцию шаблонизации для строк. Название этой функции ставится перед первой обратной кавычкой:</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let str = func`моя строка`;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function toUSD(strings, ...vals) {
+        return strings.reduce((previousValue, currentItem, index) => {
+            return previousValue + Math.floor(vals[index - 1] / 27) + currentItem;
+        });
+    }
+
+    let str = toUSD`Какая-то строка, ${6200} продолжение строки.`;
+
+    console.log(str);
+    // "Какая-то строка, 229 продолжение строки."
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше про Template Strings можно
+                        <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals">тут</a>,
+                        <a href="http://frontender.info/es6-in-depth-template-strings/">тут</a> и
+                        <a href="https://learn.javascript.ru/es-string">тут</a>
+                </section>
+            </section>
+
+            <!-- Стрелочные функции -->
+            <section>
+                <section>
+                    <h2>Стрелочные функции</h2>
+
+                    <p>В ES-2015 появился новый синтаксис для задания функций через «стрелку» =></p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    // было
+    let pow = function(x) {
+        return x * x;
+    };
+
+    // стало, краткая запись
+    let pow = x => x * x;
+
+    // блочная запись
+    let pow = (x) => {
+        return x * x;
+    };
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>что нужно знать</h3>
+
+                    <ul>
+                        <li>Неявный return при отсутствии {}</li>
+                        <li>Не имеют собственного контекста, this — тот же что у родительской области</li>
+                        <li>Стрелочные функции не могут быть использованы как конструктор</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Неявный return</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let arr = [1,2,3,4,5,6];
+
+    let filterArr = arr.filter(x => x % 2 !== 0);
+
+    // filterArr = [1,3,5]
+                    </code></pre>
+
+                    <h4>Отсутствие контекста</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function Person() {
+        this.name = `John`;
+
+        setInterval(() => {
+            console.log(this.name); // 'John'
+        }, 1000);
+    }
+                    </code></pre>
+                </section>
+
+                <section>
+                    Узнать больше можно
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">тут</a>,
+                        <a href="https://learn.javascript.ru/es-function">тут</a> и
+                        <a href="http://css-live.ru/articles/es6-strelochnye-funkcii-iznutri.html">тут</a>
+                </section>
+            </section>
+
+            <!-- Параметры по умолчанию -->
+            <section>
+                <h2>Параметры по умолчанию</h2>
+
+                <p>В ES2015 появилась возможность указывать параметры по умолчанию</p>
+
+                <pre><code class="javascript" contenteditable="true">
+    let hello = (user=`Guest`) => {
+        return `Hello, ${user}!`;
+    };
+
+    hello(`world`); // "Hello, world!"
+
+    hello(); // "Hello, Guest!"
+                </code></pre>
+            </section>
+
+            <!-- spread & rest -->
+            <section>
+                <section>
+                    <h2>операторы spread & rest</h2>
+
+                    <ul>
+                        <li>Имеют одинаковый синтаксис "..."</li>
+                        <li>Различная интерпритация, в зависимости от контекста применения</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>spread</h3>
+
+                    <p>Позволяет разложить массив на составляющие</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    //пример 1
+    let arr = [2, 3, 5];
+
+    let func = (a,b,c) => {
+        //...
+    };
+
+    func(...arr);
+
+    // пример 2
+    let data = [...arr, 7, 11, 13];
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>rest</h3>
+
+                    <p>Позволяет объединить отдельные значения в массив</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let func = (first, ...rest) => {
+        console.log(first); // 2
+        console.log(rest); // [3,5,7]
+    }
+
+    func(2,3,5,7);
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Деструктуризация -->
+            <section>
+                <section>
+                    <h2>Деструктуризация</h2>
+
+                    <p>Деструктуризация (destructuring assignment) – новый синтаксис присваивания, при котором можно присвоить массив или объект сразу нескольким переменным, разбив его на части.</p>
+                </section>
+
+                <section>
+                    <h4>Деструктуризация массива</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let array = [1, 2, 3, 4];
+
+    let [first, , third] = array;
+
+    console.log(first, third); // 1 3
+                    </code></pre>
+
+                    <h4>в связке с оператором rest</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let array = [1, 2, 3, 4];
+
+    let [first, ...rest] = array;
+
+    console.log(first, rest); // 1 [2, 3, 4]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>обмен значениями</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let x = 5;
+    let y = 10;
+
+    [x, y] = [y, x];
+
+    console.log(x, y); // 10 5
+                    </code></pre>
+
+                    <h4>Значения по умолчанию</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let array = [];
+    let [userName=`Guest`] = array;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>Деструктуризация объекта</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let time = {
+        year: `2016`,
+        month: `12`,
+        day: `26`,
+        hour: `12`,
+        minute: `30`
+    };
+
+    let {year, day} = time;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>присвоение свойства объекта в переменную с другим именем</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let user = {name: `John`, age: 25};
+    let {name: userName} = user;
+
+    console.log(userName); // John
+                    </code></pre>
+
+                    <h4>Вложенные деструктуризации</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let users = [
+        {name: `John`},
+        {name: `Bill`}
+    ];
+
+    let [, {name: secondUser}] = users;
+
+    console.log(secondUser); // Bill
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>Деструктуризация параметров функции</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let user = {name: `John`, age: 25};
+
+    let func = ({name=`Guest`, age}) => {
+        console.log(`${name}, ${age}`);
+    };
+
+    func(user); // John, 25
+                    </code></pre>
+
+                    <p>Узнать больше можно
+                        <a href="https://learn.javascript.ru/destructuring">тут</a>,
+                        <a href="http://frontender.info/es6-in-depth-destructuring/">тут</a> и
+                        <a href="http://css-live.ru/articles/destrukturirovanie-v-javascript-es6-iznutri.html">тут</a>
+                    </p>
+                </section>
+            </section>
+
+            <!-- Object Literals -->
+            <section>
+                <section>
+                    <h2>Object Literals</h2>
+
+                    <ul>
+                        <li>Сокращенная запись для значения свойства</li>
+                        <li>Вычисляемые имена свойства</li>
+                        <li>Сокращенная запись для методов объекта</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Сокращенная запись свойств объекта</h3>
+
+                    <p>Когда имя свойства совпадает с его значением, то последнее можно опустить, в ES6 оно подставляется неявно.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let name = `John`;
+    let age = 25;
+
+    // старая запись
+    let user = {
+        name: name,
+        age: age
+    };
+
+    // сокращенная запись
+    user = {name, age};
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Вычисляемые имена свойства</h3>
+
+                    <p>Динамические имена свойств позволяют писать выражения, обёрнутые в квадратные скобки. Результат выражения станет именем свойства.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let username = `name`;
+
+    let user = {
+        [username]: `John`,
+        age: 25
+    };
+
+    console.log(user.name); // John
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Сокращенная запись методов</h3>
+
+                    <p>Объявление методов объекта больше не требует ключевого слова function</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let obj = {
+        count: 4,
+
+        getCount() {
+            return this.count;
+        }
+    };
+
+    obj.getCount(); // 4
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше можно
+                        <a href="http://css-live.ru/articles/es6-vozmozhnosti-literala-obekta-iznutri.html">тут</a></p>
+                </section>
+            </section>
+
+            <!-- Классы -->
+            <section>
+                <section>
+                    <h2>Классы</h2>
+
+                    <p>В ES6 появился новый синтаксис для классов. Класс в ES6 не представляет собой новую объектно-ориентированную модель наследования, а просто новый синтаксис для работы с прототипами и функциями-конструкторами.</p>
+                </section>
+
+                <section>
+                    <h3>Пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    class User {
+        constructor(name) {
+            this.name = name;
+        }
+
+        getName() {
+            return this.name;
+        }
+    };
+
+    let user = new User(`John`);
+
+    user.getName(); // John
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>constructor</h3>
+                    <p>Функция constructor запускается при создании экземпляра объекта, остальные методы записываются в prototype</p>
+                </section>
+
+                <section>
+                    <h3>Геттеры, сеттеры</h3>
+
+                    <p>В классах, как и в обычных объектах, можно объявлять геттеры и сеттеры через get/set, а также использовать […] для свойств с вычисляемыми именами:</p>
+                </section>
+
+                <section>
+                    <h3>пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    class User {
+        constructor(name) {
+            this.name = name;
+        }
+
+        get userAge() {
+            return this.age;
+        }
+
+        set userAge(age) {
+            this.age = age;
+        }
+    };
+
+    let user = new User(`John`);
+
+    user.userAge = 25;
+
+    console.log(user.userAge); // 25
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Статические методы</h3>
+
+                    <p>Для того, чтобы объявить статический метод класса, необходимо использовать слово static.</p>
+                    <p>Статические методы класса – это методы непосредственно самого класса.</p>
+                    <p>Статические методы вызываются через имя класса. Вызывать статические методы через имя объекта запрещено.</p>
+                </section>
+
+                <section>
+                    <h3>пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    class User {
+        constructor(name) {
+            this.name = name
+        }
+
+        static isStatic() {
+            return true;
+        }
+    }
+
+    let user = new User(`John`);
+
+    user.isStatic(); // user.isStatic is not a function
+
+    User.isStatic(); // true
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Наследование</h3>
+
+                    <p>В ES6 ключевое слово extends позволяет классу-потомку наследовать от родительского класса. Важно отметить, что конструктор класса-потомка должен вызывать super().</p>
+                    <p>Также, в классе-потомке можно вызвать метод родительского класса с помощью super.имяМетодаРодителя().</p>
+                </section>
+
+                <section>
+                    <h3>пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    class User {
+        constructor(name) {
+            this.name = name;
+        }
+
+        getName() {
+            return this.name;
+        }
+    };
+
+    class Admin extends User {
+        constructor(name) {
+            super(name);
+
+            this.role = `admin`;
+        }
+    };
+
+    let user = new Admin(`John`);
+
+    user.getName(); // John
+                    </code></pre>
+                </section>
+
+                <section>
+                    Больше унать про классы в ES2015 можно
+                    <a href="https://learn.javascript.ru/es-class">тут</a>,
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">тут</a> и
+                    <a href="https://ponyfoo.com/articles/es6-classes-in-depth">тут</a>
+                </section>
+
+            </section>
+
+            <!-- Symbol -->
+            <section>
+                <section>
+                    <h2>Symbol</h2>
+                    <p>Symbol это уникальный и неизменяемый тип данных, представленный в ES2015. Целью Symbol является создание уникального идентификатора, к которому нельзя получить доступ.</p>
+                </section>
+
+                <section>
+                    <h3>Создание</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let symbol = Symbol();
+
+    console.log(typeof symbol); // symbol
+                    </code></pre>
+
+                    <p>У функции Symbol есть необязательный аргумент «имя». Его можно использовать для описания символа.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let symbol_1 = Symbol(`name`);
+    let symbol_2 = Symbol(`name`);
+
+    console.log(symbol_1 === symbol_2); // false
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Глобальные символы</h3>
+
+                    <p>Существует «глобальный реестр» символов, который позволяет, при необходимости, иметь общие «глобальные» символы, которые можно получить из реестра по имени.</p>
+                    <p>Метод Symbol.for(key) ищет ключ в «глобальном реестре». Если символ с этим ключом есть, то этот символ и вернется. Если символ с таким ключом не найден, то он создаётся.</p>
+                </section>
+
+                <section>
+                    <h4>Создание символа в «глобальном реестре»</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let name = Symbol.for(`name`);
+
+    console.log(Symbol.for(`name`) == name); // true
+                    </code></pre>
+
+                    <h4>Получение имени символа</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let name = Symbol.for(`symbolName`);
+
+    Symbol.keyFor(name); // "symbolName"
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Использование символов</h3>
+
+                    <p>Символы можно использовать в качестве имён для свойств объекта</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let user = {
+        login: `wezom`,
+        [Symbol.for(`password`)]: `wezom`
+    };
+
+    console.log(user[Symbol.for(`password`)]); // "wezom"
+                    </code></pre>
+
+                    <p>Узнать больше про символы можно
+                        <a href="https://learn.javascript.ru/symbol">тут</a> и
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">тут</a>
+                    </p>
+                </section>
+            </section>
+
+            <!-- Итераторы -->
+            <section>
+                <section>
+                    <h2>Итераторы</h2>
+
+                    <p>В современный JavaScript добавлена новая концепция «итерируемых» (iterable) объектов.</p>
+                    <p>Итерируемые или, иными словами, «перебираемые» объекты – это те, содержимое которых можно перебрать в цикле.</p>
+                    <p>Например, перебираемым объектом является массив. Но не только он. В браузере существует множество объектов, которые не являются массивами, но содержимое которых можно перебрать (к примеру, список DOM-узлов).</p>
+                </section>
+
+                <section>
+                    <h3>Symbol.iterator</h3>
+
+                    <p>В ES2015 у всех «итерируемых» объектов есть метод Symbol.iterator, который определяет итератор для объекта по-умолчанию.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let arr = [1,2,3,4,5];
+
+    console.log(typeof arr[Symbol.iterator]); // "function"
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>У итератора есть метод next(), который возвращает следующий элемент в последовательности. Этот метод возвращает объект с двумя свойствами: done (окончен ли перебор) и value (значение).</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let arr = [2,3,5];
+
+    let itr = arr[Symbol.iterator]();
+
+    itr.next(); // { value: 2, done: false }
+    itr.next(); // { value: 3, done: false }
+    itr.next(); // { value: 5, done: false }
+    itr.next(); // { value: undefined, done: true }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>for..of</h3>
+
+                    <p>Для перебора «итерируемых» объектов добавлен новый синтаксис цикла: for..of</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    for (let char of `Hello`) {
+        console.log(char); // Выведет по одной букве: H, e, l, l, o
+    }
+
+    let arr = [2,3,5];
+
+    for (let item of arr) {
+        console.log(item); // 2, 3, 5
+    }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Объекты Array, String, Map, Set, arguments, NodeList — итерируемые в ES6 по умолчанию</p>
+                    <p>Также можно написать собственный итератор через определение obj[Symbol.iterator]() с описанием объекта.</p>
+
+                    <p>Узнать больше про итераторы можно
+                        <a href="http://learn.javascript.ru/iterator">тут</a> и
+                        <a href="http://frontender.info/es6-in-depth-iterators-and-the-for-of-loop/">тут</a></p>
+                </section>
+            </section>
+
+            <!-- Генераторы -->
+            <section>
+                <section>
+                    <h2>Генераторы</h2>
+                    <p>Генераторы – новый вид функций в современном JavaScript.
+                        Они отличаются от обычных тем, что могут приостанавливать своё выполнение,
+                        возвращать промежуточный результат и далее возобновлять его позже, в произвольный момент времени.</p>
+                </section>
+
+                <section>
+                    <h3>Создание генератора</h3>
+
+                    <p>Для объявления генератора используется новая синтаксическая конструкция: function*</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function* generateAnything() {
+        // ...
+    }
+                    </code></pre>
+
+                    <p>Функция-генератор возвращает итерируемый объект при своём вызове</p>
+                </section>
+
+                <section>
+                    <h3>yield</h3>
+
+                    <p>Внутри функции-генератора доступно ключевое слово yield.
+                        При вызове функции-генератора она выполняет код до ближайшего ключевого слова yield.
+                        По достижении yield выполнение приостанавливается, а значение – возвращается</p>
+                </section>
+
+                <section>
+                    <h3>Пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function* range(start, stop) {
+        for (let i = start; i &lt;= stop; i++) {
+            yield i;
+        }
+    }
+
+    let counter = range(5, 7);
+
+    counter.next(); // {"done": false, "value": 5}
+    counter.next(); // {"done": false, "value": 6}
+    counter.next(); // {"done": false, "value": 7}
+    counter.next(); // {"done": true, "value": undefined}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>Перебор через for..of</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function* generateNumber() {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+
+    let numbers = generateNumber();
+
+    for(let value of numbers) {
+        console.log(value); // 1, 2, 3
+    }
+                    </code></pre>
+
+                    <h4>spread</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    console.log([...numbers]); // [1,2,3]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Делегирование генератора</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function* generateNumber() {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+
+    function* generate() {
+        yield `start`;
+        yield* generateNumber();
+        yield `finish`;
+    }
+
+    let result = generate();
+
+    result.next(); // {"done": false, "value": "start"}
+    result.next(); // {"done": false, "value": 1}
+    result.next(); // {"done": false, "value": 2}
+    result.next(); // {"done": false, "value": 3}
+    result.next(); // {"done": false, "value": "finish"}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Передача значения извне в генератор</h3>
+
+                    <p>yield не только возвращает результат наружу, но и может передавать значение извне в генератор</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function* generate() {
+        let input = yield `start`;
+
+        console.log(input); // 1
+
+        input = yield;
+
+        console.log(input); // 2
+
+        yield;
+    }
+
+    let result = generate();
+
+    result.next(0); // {"done": false,"value": "start"}
+    result.next(1); // {"done": false,"value": undefined}
+    result.next(2); // {"done": false,"value": undefined}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше про генераторы можно
+                        <a href="http://learn.javascript.ru/generator">тут</a> и
+                        <a href="http://frontender.info/es6-in-depth-generators/">тут</a>
+                </section>
+            </section>
+
+            <!-- Promises -->
+            <section>
+                <section>
+                    <h2>Promises</h2>
+                    <p>В ES6 появилась встроенная поддержка промисов. Промис это объект, который ждёт выполнения асинхронной операции, после которого (т.е. после выполнения) промис принимает одно из двух состояний: fulfilled (resolved, успешное выполнение) или rejected (выполнено с ошибкой).</p>
+                </section>
+
+                <section>
+                    <p>Стандартным способом создания промиса является конструктор new Promise(),
+                        который принимает обработчик с двумя функциями как параметрами.
+                        Первый обработчик (обычно именуемый resolve) представляет собой функцию для вызова вместе с будущим значением,
+                        когда оно будет готово; второй обработчик (обычно именуемый reject) является функцией,
+                        которая вызывается для отказа от выполнения промиса</p>
+                </section>
+
+                <section>
+                    <h3>Создание промиса</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let promise = new Promise(function(resolve, reject) {
+        if (/* условие */) {
+            resolve(/* значение */);  // fulfilled successfully
+        } else {
+            reject(/* reason */);  // rejected
+        }
+    });
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Каждый промис обладает методом then, в котором есть два callback-a. Первый callback вызывается, если промис успешно выполнен (resolved),
+                        тогда как второй callback вызывается, если промис выполнен с ошибкой (rejected).</p>
+
+                    <pre><code class="javascript" contenteditable="true" >
+    let promise = new Promise(function(resolve, reject) {
+        resolve(`success`);
+    });
+
+    promise
+        .then(
+            response => {
+                console.log(response); // "success"
+            }
+        );
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Использование</h3>
+                    <p>В современном JavaScript промисы используются для организации асинхронного кода.</p>
+                </section>
+
+                <section>
+                    <pre  style="font-size: 15px !important;"><code class="javascript" contenteditable="true" style="font-size: 15px !important;">
+    function httpGet(url) {
+        return new Promise(function(resolve, reject) {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    resolve(this.response);
+                } else {
+                    var error = new Error(this.statusText);
+                    error.code = this.status;
+                    reject(error);
+                }
+            };
+
+            xhr.onerror = function() {
+                reject(new Error("Network Error"));
+            };
+
+            xhr.send();
+        });
+    }
+
+    httpGet("/article/promise/user.json")
+        .then(
+            response => {
+                console.log(`Success: ${response}`);
+            },
+            error => {
+                console.log(`Error: ${error}`);
+            }
+        );
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Цепочки промисов</h3>
+
+                    <p>Возможность строить асинхронные цепочки из промисов – пожалуй, основная причина,
+                        из-за которой существуют и активно используются промисы.</p>
+
+                    <p>При последовательных вызовах .then…then…then, в каждый следующий then переходит результат от предыдущего.</p>
+                </section>
+
+                <section>
+                    <pre><code class="javascript" contenteditable="true">
+    function getDate() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(new Date());
+            }, 2000);
+        });
+    }
+
+    getDate()
+        .then(date => {
+            return `Date: ${date}`;
+        })
+        .then(result => {
+            console.log(result); // "Date: Thu Dec 22 2016 20:43:38..."
+            return getDate().then((date) => date);
+        })
+        .then(result => {
+            console.log(`Date: ${result}`); // "Date: Thu Dec 22 2016 20:43:40..."
+        });
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Параллельное выполнение</h3>
+
+                    <p>Вызов метода Promise.all(iterable) получает массив (или другой итерируемый объект) промисов и возвращает промис,
+                        который ждёт, пока все переданные промисы завершатся, и переходит в состояние «выполнено» с массивом их результатов.</p>
+                </section>
+
+                <section>
+                    <h3>метод Promise.all</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    Promise.all([
+        httpGet('/article/promise/user.json'),
+        httpGet('/article/promise/guest.json')
+    ]).then(results => {
+        console.log(results); // [...]
+    });
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>метод Promise.race</h3>
+
+                    <p>Вызов Promise.race, как и Promise.all, получает итерируемый объект с промисами, которые нужно выполнить, и возвращает новый промис.</p>
+                    <p>Но, в отличие от Promise.all, результатом будет только первый успешно выполнившийся промис из списка. Остальные игнорируются.</p>
+                </section>
+
+                <section>
+                    <p>Узнать больше про промисы можно
+                        <a href="http://learn.javascript.ru/promise">тут</a>
+                </section>
+            </section>
+
+            <!-- Map & WeakMap -->
+            <section>
+                <section>
+                    <h2>Map & WeakMap</h2>
+
+                    <p>В ES-2015 появились новые структуры данных: Set, Map, WeakSet и WeakMap.</p>
+                </section>
+
+                <section>
+                    <h3>Map</h3>
+
+                    <p>Map – коллекция для хранения записей вида ключ:значение.</p>
+                    <p>В отличие от объектов, в которых ключами могут быть только строки, в Map ключом может быть что угодно: функции, объекты, даты...</p>
+                </section>
+
+                <section>
+                    <h3>Создание Map</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let map = new Map();
+
+    map.set(`name`, `John`);
+    map.set(false, 42);
+    map.set({value: 10}, [2, 3, 5, 7]);
+    map.set(new Date(), `Hello, world!`);
+    map.set(document.querySelector(`body`), `DOM Element`);
+
+    map.get(false); // 42
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Методы</h3>
+
+                    <ul>
+                        <li>map.set(key, value) – запись значения</li>
+                        <li>map.get(key) – получения значения по ключу</li>
+                        <li>map.size – общее количество записей в map</li>
+                        <li>map.delete(key) – удаляет запись с ключом key</li>
+                        <li>map.clear() – удаляет все записи, очищает map</li>
+                        <li>map.has(key) – возвращает true, если ключ есть, иначе false</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Перебор</h3>
+
+                    <p>Для итерации по map используется один из трёх методов:</p>
+
+                    <ul>
+                        <li>map.keys() – возвращает итерируемый объект для ключей</li>
+                        <li>map.values() – возвращает итерируемый объект для значений</li>
+                        <li>map.entries() – возвращает итерируемый объект для записей [ключ, значение], он используется по умолчанию в for..of</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Map является итерируемым объектом, значит его можно перебрать с помощью for..of</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let users = new Map();
+
+    users
+        .set(`1`, `John`)
+        .set(`2`, `Bill`)
+        .set(`3`, `Steve`);
+
+    for(let item of users.keys()) {
+        console.log(item); // "1", "2", "3"
+    }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>WeakMap</h3>
+
+                    <p>Можно рассматривать объект WeakMap как подмножество Map.
+                        У WeakMap есть несколько ограничений, отсутствующих в Map.
+                        Самое главное ограничение WeakMap в том, что в отличие от Map он не итерируемый, а значит нет методов .entries(), .keys(), values(), .forEach() и .clear()</p>
+                </section>
+
+                <section>
+                    <p>Ключи WeakMap должны быть ссылочных типов. В виде ключей нельзя использовать такие типы, как символы, числа или строки.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let map = new WeakMap();
+
+    let obj = {};
+    let header = document.querySelector(`.header`);
+
+    map.set(obj, `hello, world!`);
+
+    map.set(header, {
+        show(){ /* ... */ },
+        hide(){ /* ... */ }
+    });
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>В WeakMap ключи обладают неустойчивыми связями, что позволяет не мешать сборщику мусора удалять элементы WeakMap.
+                        Это означает, что можно не беспокоиться об утечках памяти.</p>
+
+                    <p>Записи WeakMap с ключом key, который является единственной ссылкой на указанную переменную — подлежат сборке мусора</p>
+                </section>
+
+                <section>
+                    <p>Узнать больше про Map и WeakMap можно
+                        <a href="http://learn.javascript.ru/set-map">тут</a>,
+                        <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">тут</a> и
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">тут</a>
+                </section>
+            </section>
+
+            <!-- Set & WeakSet -->
+            <section>
+                <section>
+                    <h2>Set & WeakSet</h2>
+
+                    <p>Объекты Set это коллекции уникальных значений. Дублированные значения игнорируются, т.к. коллекция должна содержать только уникальные значения.
+                        Значения могут быть примитивами или ссылками на объекты.</p>
+                </section>
+
+                <section>
+                    <p>У объектов Set нет ключей, есть только значения</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    var set = new Set([1, 2, 3, 4, 4]);
+
+    console.log([...set]); // [1, 2, 3, 4]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Методы</h3>
+
+                    <ul>
+                        <li>set.add(item) – добавляет в коллекцию item</li>
+                        <li>set.delete(item) – удаляет item из коллекции, возвращает true, если он там был, иначе false</li>
+                        <li>set.has(item) – возвращает true, если item есть в коллекции, иначе false</li>
+                        <li>set.clear() – очищает set</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Объект Set является итерируемым. Можно перебирать Set в цикле с помощью for...of.
+                        Перебор происходит в том же порядке, что и вставка.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let users = new Set();
+
+    users
+        .add(`John`)
+        .add(`Bill`)
+        .add(`John`)
+        .add(`Steve`);
+
+    for(let item of users) {
+        console.log(item); // "John", "Bill", "Steve"
+    }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>WeakSet</h3>
+
+                    <p>Аналогично WeakMap, объект WeakSet позволяет хранить объекты с неустойчивыми связями в коллекции.</p>
+                    <p>Объект WeakSet не итерируемый.</p>
+
+                    <p>Это значит, что нельзя перебирать WeakSet, его значения должны быть ссылками на уникальный объект.
+                        Если на найденное в WeakSet value ни на что не ссылается, объект подлежит сборке мусора.</p>
+                </section>
+
+                <section>
+                    <h3>Пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let set = new WeakSet();
+    let date = new Date();
+
+    set.add(date);
+    set.has(date);  // true
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше про Set и WeakSet можно
+                        <a href="http://learn.javascript.ru/set-map">тут</a>
+                </section>
+            </section>
+
+            <!-- ES2015 Modules -->
+            <section>
+                <section>
+                    <h2>ES2015 Modules</h2>
+
+                    <p>По сути, модуль — это инструкция (statement), которая вызывается неявно — посредством создания файла и выполнения его с помощью интерпретатора ES (прямо, при «запуске» файла программистом, или косвенно, в результате импорта другим модулем). В ES6 есть чёткое соотношение: один файл — один модуль. Каждый модуль имеет отдельную область видимости (Lexical environment) — т. е. все объявления переменных, функций и классов не будут доступны за пределами модуля (файла), если не экспортированы явно. </p>
+                </section>
+
+                <section>
+                    <h3>export</h3>
+
+                    <p>Оператор export позволяет экспортировать сущности модуля, чтобы они были доступны из других модулей.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    export let obj = {};
+
+    export class User {
+        // ...
+    };
+
+    export const PI = 3.14159265359;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h4>Экспорт объявленной сущности</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function func(){ /* ... */ };
+
+    const PI = 3.14159265359;
+
+    export {func, PI};
+                    </code></pre>
+
+                    <h4>export as</h4>
+
+                    <pre><code class="javascript" contenteditable="true">
+    class User {
+        // ...
+    };
+
+    export {User as UserAPI};
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>export default</h3>
+
+                    <p>В случае когда модуль экспортирует только одно значение, удобно определить это значение как экспортируемое по умолчанию:</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    export default class {
+        constructor(id, name) {
+            // ...
+        }
+    };
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>import</h3>
+
+                    <p>Другие модули могут подключать экспортированные значения при помощи ключевого слова import.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    import { User, PI } from './api/math';
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Импортировать можно под другим именем при помощи «as»:</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    import {list as users} from './users';
+                    </code></pre>
+
+                    <p>Можно импортировать все значения в виде объекта при помощи import * as obj from "module"</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    import * as mathAPI from './api/math';
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Свойство экспортированное по умолчанию при импорте присваивается без фигурных скобок</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    import User from './api/user';
+                    </code></pre>
+
+                    <p>Экспортированное по умолчанию свойство при импорте можно назвать как угодно.</p>
+                </section>
+
+                <section>
+                    <h3>Реэкспорт</h3>
+
+                    <p>Повторный экспорт модулем свойства, которое он импортирует из другого модуля</p>
+
+                     <pre><code class="javascript" contenteditable="true">
+    export { something } from './another';
+
+    export * from './another';
+                     </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше про модули в ES2015 можно
+                        <a href="http://learn.javascript.ru/modules#import">тут</a> и
+                        <a href="http://frontender.info/es6-modules/">тут</a>
+                </section>
+
+            </section>
+
+            <!-- Proxy -->
+            <section>
+                <section>
+                    <h2>Proxy</h2>
+
+                    <p>Прокси (proxy) – особый объект, смысл которого – перехватывать обращения к другому объекту и, при необходимости, модифицировать их.</p>
+                </section>
+
+                <section>
+                    <h3>Синтаксис</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let proxy = new Proxy(target, handler);
+                    </code></pre>
+
+                    <p>target – объект, обращения к которому надо перехватывать</p>
+                    <p>handler – объект с «ловушками»: функциями-перехватчиками для операций к target</p>
+                </section>
+
+                <section>
+                    <p>Почти любая операция может быть перехвачена и обработана прокси до или даже вместо доступа к объекту target,
+                        например: чтение и запись свойств, получение списка свойств, вызов функции (если target – функция) </p>
+                </section>
+
+                <section>
+                    <h3>методы обработчика</h3>
+
+                    <ul style="font-size: 24px;">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/getPrototypeOf">getPrototypeOf</a>
+                            – перехватывает обращение к методу getPrototypeOf.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/setPrototypeOf">setPrototypeOf</a>
+                            – перехватывает обращение к методу setPrototypeOf.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/isExtensible">isExtensible</a>
+                            – перехватывает обращение к методу isExtensible.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/preventExtensions">preventExtensions</a>
+                            – перехватывает обращение к методу preventExtensions.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/getOwnPropertyDescriptor">getOwnPropertyDescriptor</a>
+                            – перехватывает обращение к методу getOwnPropertyDescriptor.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/defineProperty">defineProperty</a>
+                            – перехватывает обращение к методу defineProperty.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/has">has</a>
+                            – перехватывает проверку существования свойства, которая используется в операторе in и в некоторых других методах встроенных объектов.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/get">get</a>
+                            – перехватывает чтение свойства.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set">set</a>
+                            – перехватывает запись свойства.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/deleteProperty">deleteProperty</a>
+                            – перехватывает удаление свойства оператором delete.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/enumerate">enumerate</a>
+                            – срабатывает при вызове for..in или for..of, возвращает итератор для свойств объекта.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/ownKeys">ownKeys</a>
+                            – перехватывает обращения к методу getOwnPropertyNames.</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/apply">apply</a>
+                            – перехватывает вызовы target().</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/construct">construct</a>
+                            – перехватывает вызовы new target().</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>get</h3>
+
+                    <p>Срабатывает при чтении свойства из прокси.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    get(target, property, receiver);
+                    </code></pre>
+
+                    <ul style="font-size: 24px;">
+                        <li>target – целевой объект, тот же который был передан первым аргументом в new Proxy.</li>
+                        <li>property – имя свойства.</li>
+                        <li>receiver – объект, к которому было применено присваивание. Обычно сам прокси, либо прототипно наследующий от него. Этот аргумент используется редко.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>get</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let user = {
+        name: `john`
+    };
+
+    let proxy = new Proxy(user, {
+        get(target, prop) {
+            console.log(`Чтение ${prop}`); // "Чтение name"
+            return target[prop].toUpperCase();
+        }
+    });
+
+    console.log(proxy.name); // "JOHN"
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>set</h3>
+
+                    <p>Срабатывает при записи свойства в прокси.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    set(target, property, value, receiver);
+                    </code></pre>
+
+                    <ul style="font-size: 24px;">
+                        <li>target – целевой объект, тот же который был передан первым аргументом в new Proxy.</li>
+                        <li>property – имя свойства.</li>
+                        <li>value – значение свойства.</li>
+                        <li>receiver – объект, к которому было применено присваивание, обычно сам прокси, либо прототипно наследующий от него.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>set</h3>
+
+                    <p>Метод set должен вернуть true, если присваивание успешно обработано и false в случае ошибки </p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let user = {};
+
+    let proxy = new Proxy(user, {
+        set(target, prop, value) {
+            console.log(`Запись ${prop} ${value}`); // "Запись name John"
+            target[prop] = value;
+            return true;
+        }
+    });
+
+    proxy.name = `John`;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>has</h3>
+
+                    <p>Ловушка has срабатывает в операторе in и некоторых других случаях, когда проверяется наличие свойства.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let user = {
+        "name": "John"
+    };
+
+    let proxy = new Proxy(user, {
+        has(target, phrase) {
+            console.log(phrase); // "name"
+
+            if(phrase in target) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+
+    console.log("name" in proxy); // true
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>apply</h3>
+
+                    <p>Прокси умеет работать не только с обычными объектами, но и с функциями. Если аргумент target прокси – функция, то становится доступна ловушка apply для её вызова.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let obj = {ratio: 42};
+
+    function calcSomething(num) {
+        return num * this.ratio;
+    }
+
+    let proxy = new Proxy(calcSomething, {
+        apply: function(target, context, argumentsList) {
+            return target.apply(context, argumentsList);
+        }
+    });
+
+    console.log( proxy.apply(obj, [10]) ); // 420
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>construct</h3>
+
+                    <p>Ловушка construct перехватывает вызовы при помощи new. Она получает исходный объект target и список аргументов argumentsList.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function User(name, surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
+    let UserProxy = new Proxy(User, {
+        construct: function(target, argumentsList) {
+            return new target(...argumentsList);
+        }
+    });
+
+    let user = new UserProxy(`John`, `Doe`);
+
+    console.log(user.name); // "John"
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Узнать больше про proxy можно
+                        <a href="http://learn.javascript.ru/proxy">тут</a>
+                </section>
+            </section>
+
+            <!-- Reflect -->
+            <section>
+                <section>
+                    <h2>Reflect API</h2>
+
+                    <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect">Reflect</a> - новый статический встроенный объект в ES2015,
+                        который позволяет создавать методы, перехватывающие  операции JavaScript.
+                        При этом методы называются так же, как и методы proxy handler`ов. Reflect - это не функциональный, а простой объект,
+                        он не является конструктором.</p>
+                </section>
+
+                <section>
+                    <h3>Пример</h3>
+
+                    <pre><code class="javascript" contenteditable="true">
+    function User(name, surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
+    let ref = Reflect.construct(User, [`John`, `Doe`]);
+
+    // let ref = new User(`John`, `Doe`);
+
+    console.log(ref.name); // "John"
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Math -->
+            <section>
+                <section>
+                    <h3>Новые методы объекта Math</h3>
+
+                    <ul style="font-size: 26px;">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign">Math.sign</a>
+                            — функция, возвращающая знак числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc">Math.trunc</a>
+                            — возвращает целую часть числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cbrt">Math.cbrt</a>
+                            — возвращает кубический корень из значения</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/expm1">Math.expm1</a>
+                            — возвращает e в степени value с вычетом 1 , или e^value - 1</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log1p">Math.log1p</a>
+                            — возвращает натуральный логарифм value + 1, или ln(value + 1)</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log10">Math.log10</a>
+                            — возвращает десятичный логарифм числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log2">Math.log2</a>
+                            — возвращает двоичный логарифм значения, или log<sub>2</sub>(value)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul style="font-size: 26px;">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sinh">Math.sinh</a>
+                            — возвращает гиперболический синус числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cosh">Math.cosh</a>
+                            — возвращает гиперболический косинус числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/tanh">Math.tanh</a>
+                            — возвращает гиперболический тангенс числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/asinh">Math.asinh</a>
+                            — возвращает гиперболический арксинус числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/acosh">Math.acosh</a>
+                            — возвращает гиперболический арккосинус числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atanh">Math.atanh</a>
+                            — возвращает гиперболический арктангенс числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot">Math.hypot</a>
+                            — квадратный корень из суммы квадратов</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/clz32">Math.clz32</a>
+                            — возвращает количество ведущих нулей 32-битного представления числа</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul">Math.imul</a>
+                            — возвращает результат умножения 32-битных чисел</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/fround">Math.fround</a>
+                            — возвращает наиболее близкое представление данного числа в виде числа с плавающей запятой одинарной точности</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- String -->
+            <section>
+                <h3>Новые методы объекта String</h3>
+
+                <ul style="font-size: 26px;">
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith">String.prototype.startsWith</a>
+                        — определяет, начинается ли строка с value</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith">String.prototype.endsWith</a>
+                        — определяет, заканчивается ли строка на value</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes">String.prototype.includes</a>
+                        — определяет, содержит ли строка value где-либо</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat">String.prototype.repeat</a>
+                        — возвращает строку, повторенную заданное количество раз</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/@@iterator">String.prototype[Symbol.iterator]</a>
+                        — позволяет перебирать последовательность кодов Юникода (не символов) Юникод</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt">String.prototype.codePointAt</a>
+                        — возвращает десятичное числовое представление кода в данной позиции в строке</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint">String.fromCodePoint</a>
+                        — при заданных ...codepoints возвращает строку, созданную из их представлений в Юникоде</li>
+
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize">String.prototype.normalize</a>
+                        — возвращает нормализованную версию представления строки в Юникоде</li>
+                </ul>
+            </section>
+
+            <!-- Array -->
+            <section>
+                <section>
+                    <h3>Новые методы объекта Array</h3>
+
+                    <ul style="font-size: 26px;">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from">Array.from</a>
+                            — создаёт экземпляры Array из массиво-подобных объектов, таких как arguments или итерируемых объектов</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of">Array.of</a>
+                            — напоминает new Array(...items), но без особых случаев</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin">Array.prototype.copyWithin</a>
+                            — копирует последовательность элементов массива в другое место массива</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.prototype.fill</a>
+                            — заполняет все элементы существующего массива предоставленным значением</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">Array.prototype.find</a>
+                            — возвращает первый элемент, удовлетворяющий условию проверяющей функции</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul style="font-size: 26px;">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex">Array.prototype.findIndex</a>
+                            — возвращает индекс первого элемента, удовлетворяющего условию проверяющей функции</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/keys">Array.prototype.keys</a>
+                            — возвращает итератор , дающий последовательность, содержащую ключи массива</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values">Array.prototype.values</a>
+                            — возвращает итератор, дающий последовательность, содержащую значения массива</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries">Array.prototype.entries</a>
+                            — возвращает итератор массива, содержащий пару ключ значение каждого индекса в массиве</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/@@iterator">Array.prototype[Symbol.iterator]</a>
+                            — в точности такой же, как метод Array.prototype.values</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Object -->
+            <section>
+                <section>
+                    <h3>Новые методы объекта Object</h3>
+
+                    <ul style="font-size: 26px;">
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a>
+                            — рекурсивная поверхностная перезапись свойств</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is">Object.is</a>
+                            — как программное использование оператора ===, но также дает true при сравнении NaN c NaN и +0 c -0</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols">Object.getOwnPropertySymbols</a>
+                            — возвращает все собственные свойства-символы, найденные в объекте</li>
+
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf">Object.setPrototypeOf</a>
+                            — изменяет прототип. Равнозначно сеттеру target.__proto__</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Object.assign</h3>
+
+                    <p>Метод Object.assign() используется для копирования значений всех собственных перечисляемых свойств из одного или более исходных объектов в целевой объект. После копирования он возвращает целевой объект.</p>
+
+                    <pre><code class="javascript" contenteditable="true">
+    let object1 = {x: 1, y: 3};
+    let object2 = {y: 5, z: 7};
+
+    let object = Object.assign({}, object1, object2);
+
+    // аналогично записи
+    let object = $.extend({}, object1, object2);
+
+    console.log(object); // {x: 1, y: 5, z: 7};
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Поддержка -->
+            <section>
+                <h3>Поддержка ES2015 браузерами</h3>
+
+                <ul>
+                    <li>Edge 15 - 95%</li>
+                    <li>FF 52 - 94%</li>
+                    <li>Chrome 57 - 97%</li>
+                    <li>Opera 44 - 97%</li>
+                    <li>Safari 10 - 100%</li>
+                    <li>IE 11 - 11%</li>
+                </ul>
+
+                <p>Текущее состояние реализации различных возможностей браузерами можно посмотреть здесь:
+                    <a href="https://kangax.github.io/compat-table/es6/">https://kangax.github.io/compat-table/es6/</a></p>
+            </section>
+
+            <section>
+                <h2>Использование ES2015</h2>
+
+                <p>Babel - это JavaScript транспайлер, преобразующий код на ES2015 в код на ES5.</p>
+                <p>Babel поддерживают практически все системы сборки: Gulp, Grunt, Webpack, Browserify, Rollup</p>
+            </section>
+
+            <section>
+                <h2>Конец</h2>
+            </section>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
