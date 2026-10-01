@@ -38,3 +38,9 @@ npm run build
 ```
 
 The generated site is in `dist/` and can be hosted as static files. Dependencies are pinned in `package.json` and `package-lock.json`. Run `npm run preview` to inspect the production build locally.
+
+## GitHub Pages
+
+The [live presentation](https://charliegordon.github.io/es-2015/) is deployed by `.github/workflows/deploy.yml`. Every push to `main` installs the locked dependencies, builds the site with the `/es-2015/` asset base, and publishes `dist/` to GitHub Pages. You can also run the workflow manually from the repository's Actions tab.
+
+In the repository's **Settings → Pages**, set **Source** to **GitHub Actions** before the first deployment. The local Vite configuration keeps relative asset URLs for other static hosts.
